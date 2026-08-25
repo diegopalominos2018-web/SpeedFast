@@ -4,30 +4,39 @@ public class Main {
 
         Pedido comida = new PedidoComida(
                 1,
-                "Av. Providencia 123"
+                "Av. Providencia 123",
+                5.5
         );
 
         Pedido encomienda = new PedidoEncomienda(
                 2,
-                "Av. Grecia 456"
+                "Av. Grecia 456",
+                10.0
         );
 
         Pedido express = new PedidoExpress(
                 3,
-                "Av. Macul 2202"
+                "Av. Macul 2202",
+                3.0
         );
 
-        comida.asignarRepartidor();
-        comida.asignarRepartidor("Juan José Pérez");
+        System.out.println("===== PEDIDO COMIDA =====");
+        comida.mostrarResumen();
+        System.out.println("Tiempo estimado: "
+                + comida.calcularTiempoEntrega() + " minutos");
 
         System.out.println();
 
-        encomienda.asignarRepartidor();
-        encomienda.asignarRepartidor("Camila Sotomayor");
+        System.out.println("===== PEDIDO ENCOMIENDA =====");
+        encomienda.mostrarResumen();
+        System.out.println("Tiempo estimado: "
+                + encomienda.calcularTiempoEntrega() + " minutos");
 
         System.out.println();
 
-        express.asignarRepartidor();
-        express.asignarRepartidor("Luis Díaz");
+        System.out.println("===== PEDIDO EXPRESS =====");
+        express.mostrarResumen();
+        System.out.println("Tiempo estimado: "
+                + express.calcularTiempoEntrega() + " minutos");
     }
 }
