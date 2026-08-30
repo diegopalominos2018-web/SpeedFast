@@ -31,5 +31,12 @@ public abstract class Pedido {
         return distanciaKm;
     }
 
+    public int getIdPedido() {
+        return idPedido;
+    }
+    public String getTipoPedido() {
+        return tipoPedido;
+    }
+
     public abstract double calcularTiempoEntrega();
 }
