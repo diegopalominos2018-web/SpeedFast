@@ -7,7 +7,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // Creación de los pedidos utilizando referencias de tipo Pedido
+        // Creación de los pedidos utilizando referencias de tipo modelo.Pedido
         Pedido comida = new PedidoComida(
                 1,
                 "Av. Providencia 123",

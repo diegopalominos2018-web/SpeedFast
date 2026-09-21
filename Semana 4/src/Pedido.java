@@ -17,7 +17,7 @@ public abstract class Pedido {
     }
 
     public void asignarRepartidor(String nombreRepartidor) {
-        System.out.println("Pedido asignado a " + nombreRepartidor);
+        System.out.println("modelo.Pedido asignado a " + nombreRepartidor);
     }
 
     public void mostrarResumen() {

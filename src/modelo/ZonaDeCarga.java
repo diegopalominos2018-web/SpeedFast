@@ -1,3 +1,5 @@
+package modelo;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -13,7 +15,7 @@ public class ZonaDeCarga {
     public synchronized void agregarPedido(Pedido p) {
         pedidosPendientes.add(p);
 
-        System.out.println("Pedido #" + p.getIdPedido()
+        System.out.println("modelo.Pedido #" + p.getIdPedido()
                 + " agregado. Destino: " + p.getDireccionEntrega());
     }
 

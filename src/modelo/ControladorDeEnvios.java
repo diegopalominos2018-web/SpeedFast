@@ -1,3 +1,5 @@
+package modelo;
+
 import java.util.ArrayList;
 
 public class ControladorDeEnvios implements Despachable, Cancelable, Rastreable {
@@ -10,12 +12,12 @@ public class ControladorDeEnvios implements Despachable, Cancelable, Rastreable 
 
     @Override
     public void despachar() {
-        System.out.println("→ Pedido despachado correctamente.");
+        System.out.println("→ modelo.Pedido despachado correctamente.");
     }
 
     @Override
     public void cancelar() {
-        System.out.println("→ Pedido cancelado exitosamente.");
+        System.out.println("→ modelo.Pedido cancelado exitosamente.");
     }
 
     @Override
@@ -23,7 +25,7 @@ public class ControladorDeEnvios implements Despachable, Cancelable, Rastreable 
         System.out.println("Historial de entregas:");
 
         for (Pedido pedido : historial) {
-            System.out.println("- Pedido #" + pedido.getIdPedido()
+            System.out.println("- modelo.Pedido #" + pedido.getIdPedido()
                     + " (" + pedido.getTipoPedido() + ")");
         }
     }
@@ -32,7 +34,7 @@ public class ControladorDeEnvios implements Despachable, Cancelable, Rastreable 
         historial.add(pedido);
     }
     public void reservarPedido(Pedido pedido) {
-        System.out.println("→ Pedido #" + pedido.getIdPedido()
+        System.out.println("→ modelo.Pedido #" + pedido.getIdPedido()
                 + " (" + pedido.getTipoPedido() + ") reservado correctamente.");
     }
 }

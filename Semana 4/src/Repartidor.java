@@ -18,13 +18,13 @@ public class Repartidor implements Runnable {
         for (Pedido pedido : pedidos) {
 
             System.out.println(
-                    "Repartidor " + nombre + " está procesando un pedido:"
+                    "modelo.Repartidor " + nombre + " está procesando un pedido:"
             );
 
             pedido.mostrarResumen();
 
             System.out.println(
-                    "Repartidor " + nombre + " está realizando la entrega..."
+                    "modelo.Repartidor " + nombre + " está realizando la entrega..."
             );
 
             try {
@@ -32,7 +32,7 @@ public class Repartidor implements Runnable {
                 Thread.sleep((random.nextInt(4) + 2) * 1000);
 
                 System.out.println(
-                        "Repartidor " + nombre
+                        "modelo.Repartidor " + nombre
                                 + " terminó la entrega del pedido."
                 );
 

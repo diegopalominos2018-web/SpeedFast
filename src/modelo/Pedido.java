@@ -1,3 +1,5 @@
+package modelo;
+
 public class Pedido {
 
     private int idPedido;
@@ -19,7 +21,7 @@ public class Pedido {
     }
 
     public void asignarRepartidor(String nombreRepartidor) {
-        System.out.println("Pedido asignado a " + nombreRepartidor);
+        System.out.println("modelo.Pedido asignado a " + nombreRepartidor);
     }
 
     public void mostrarResumen() {
@@ -60,7 +62,7 @@ public class Pedido {
 
     @Override
     public String toString() {
-        return "Pedido #" + idPedido +
+        return "modelo.Pedido #" + idPedido +
                 " | Dirección: " + direccionEntrega +
                 " | Estado: " + estado;
     }

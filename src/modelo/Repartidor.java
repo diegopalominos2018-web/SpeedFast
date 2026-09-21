@@ -1,3 +1,5 @@
+package modelo;
+
 public class Repartidor implements Runnable {
 
     private String nombre;
@@ -19,15 +21,15 @@ public class Repartidor implements Runnable {
                 break;
             }
 
-            System.out.println("[Repartidor - " + nombre +
+            System.out.println("[modelo.Repartidor - " + nombre +
                     "] Retirando pedido #" + pedido.getIdPedido() + "...");
 
             pedido.setEstado(EstadoPedido.EN_REPARTO);
 
-            System.out.println("[Repartidor - " + nombre +
+            System.out.println("[modelo.Repartidor - " + nombre +
                     "] Estado: " + pedido.getEstado());
 
-            System.out.println("[Repartidor - " + nombre +
+            System.out.println("[modelo.Repartidor - " + nombre +
                     "] Entregando pedido #" + pedido.getIdPedido() + "...");
 
             try {
@@ -39,7 +41,7 @@ public class Repartidor implements Runnable {
 
             pedido.setEstado(EstadoPedido.ENTREGADO);
 
-            System.out.println("[Repartidor - " + nombre +
+            System.out.println("[modelo.Repartidor - " + nombre +
                     "] Estado: " + pedido.getEstado());
         }
     }

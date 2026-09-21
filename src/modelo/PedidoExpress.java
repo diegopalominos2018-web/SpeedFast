@@ -1,3 +1,5 @@
+package modelo;
+
 public class PedidoExpress extends Pedido implements Cancelable, Rastreable {
 
     public PedidoExpress(int idPedido, String direccionEntrega, double distanciaKm) {
@@ -6,7 +8,7 @@ public class PedidoExpress extends Pedido implements Cancelable, Rastreable {
 
     @Override
     public void asignarRepartidor() {
-        System.out.println("[Pedido Express]");
+        System.out.println("[modelo.Pedido Express]");
         System.out.println("Asignando repartidor...");
         System.out.println("→ Buscando repartidor más cercano... OK");
         System.out.println("→ Disponibilidad inmediata... OK");
@@ -14,7 +16,7 @@ public class PedidoExpress extends Pedido implements Cancelable, Rastreable {
 
     @Override
     public void asignarRepartidor(String nombreRepartidor) {
-        System.out.println("→ Repartidor express asignado a " + nombreRepartidor);
+        System.out.println("→ modelo.Repartidor express asignado a " + nombreRepartidor);
     }
 
     @Override
@@ -28,11 +30,11 @@ public class PedidoExpress extends Pedido implements Cancelable, Rastreable {
 
     @Override
     public void cancelar() {
-        System.out.println("→ Pedido express cancelado exitosamente.");
+        System.out.println("→ modelo.Pedido express cancelado exitosamente.");
     }
 
     @Override
     public void verHistorial() {
-        System.out.println("→ Historial de Pedido Express consultado.");
+        System.out.println("→ Historial de modelo.Pedido Express consultado.");
     }
 }

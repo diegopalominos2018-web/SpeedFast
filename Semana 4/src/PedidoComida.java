@@ -6,14 +6,14 @@ public class PedidoComida extends Pedido implements Despachable, Rastreable {
 
     @Override
     public void asignarRepartidor() {
-        System.out.println("[Pedido Comida]");
+        System.out.println("[modelo.Pedido Comida]");
         System.out.println("Asignando repartidor...");
         System.out.println("→ Verificando mochila térmica... OK");
     }
 
     @Override
     public void asignarRepartidor(String nombreRepartidor) {
-        System.out.println("→ Repartidor con mochila térmica asignado a " + nombreRepartidor);
+        System.out.println("→ modelo.Repartidor con mochila térmica asignado a " + nombreRepartidor);
     }
 
     @Override
@@ -23,11 +23,11 @@ public class PedidoComida extends Pedido implements Despachable, Rastreable {
 
     @Override
     public void despachar() {
-        System.out.println("→ Pedido de comida despachado correctamente.");
+        System.out.println("→ modelo.Pedido de comida despachado correctamente.");
     }
 
     @Override
     public void verHistorial() {
-        System.out.println("→ Historial de Pedido Comida consultado.");
+        System.out.println("→ Historial de modelo.Pedido Comida consultado.");
     }
 }
