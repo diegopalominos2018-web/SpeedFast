@@ -7,6 +7,7 @@ public class Pedido {
     private String tipoPedido;
     private double distanciaKm;
     private EstadoPedido estado;
+    private String nombreRepartidor;
 
     public Pedido(int idPedido, String direccionEntrega, String tipoPedido, double distanciaKm) {
         this.idPedido = idPedido;
@@ -14,6 +15,7 @@ public class Pedido {
         this.tipoPedido = tipoPedido;
         this.distanciaKm = distanciaKm;
         this.estado = EstadoPedido.PENDIENTE;
+        this.nombreRepartidor = "";
     }
 
     public void asignarRepartidor() {
@@ -21,6 +23,7 @@ public class Pedido {
     }
 
     public void asignarRepartidor(String nombreRepartidor) {
+        this.nombreRepartidor = nombreRepartidor;
         System.out.println("modelo.Pedido asignado a " + nombreRepartidor);
     }
 
@@ -30,6 +33,7 @@ public class Pedido {
         System.out.println("Tipo de pedido: " + tipoPedido);
         System.out.println("Distancia: " + distanciaKm + " km");
         System.out.println("Estado: " + estado);
+        System.out.println("Repartidor: " + nombreRepartidor);
     }
 
     public double getDistanciaKm() {
@@ -58,6 +62,10 @@ public class Pedido {
 
     public void setEstado(EstadoPedido estado) {
         this.estado = estado;
+    }
+
+    public String getNombreRepartidor() {
+        return nombreRepartidor;
     }
 
     @Override

@@ -1,11 +1,16 @@
 package vista;
 
+import dao.PedidoDAO;
 import modelo.EstadoPedido;
 import modelo.Pedido;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+import main.ConexionBD;
 
 public class VentanaListaPedidos extends JFrame {
 
@@ -41,6 +46,7 @@ public class VentanaListaPedidos extends JFrame {
         btnAsignar.addActionListener(e -> asignarRepartidor());
 
         JPanel panelInferior = new JPanel();
+
         panelInferior.add(btnActualizar);
         panelInferior.add(btnAsignar);
 
@@ -54,7 +60,9 @@ public class VentanaListaPedidos extends JFrame {
 
         modeloTabla.setRowCount(0);
 
-        for (Pedido pedido : VentanaRegistroPedido.listaPedidos) {
+        PedidoDAO pedidoDAO = new PedidoDAO();
+
+        for (Pedido pedido : pedidoDAO.listarTodos()) {
 
             modeloTabla.addRow(new Object[]{
                     pedido.getIdPedido(),
@@ -101,28 +109,57 @@ public class VentanaListaPedidos extends JFrame {
             return;
         }
 
-        for (Pedido pedido : VentanaRegistroPedido.listaPedidos) {
+        nombreRepartidor = nombreRepartidor.trim();
 
-            if (pedido.getIdPedido() == idPedido) {
+        // Actualizamos el estado del pedido en la base de datos
+        actualizarEstadoEnBD(
+                idPedido,
+                EstadoPedido.EN_REPARTO
+        );
 
-                pedido.asignarRepartidor(
-                        nombreRepartidor.trim()
-                );
+        // Actualizamos visualmente la tabla
+        tablaPedidos.setValueAt(
+                EstadoPedido.EN_REPARTO,
+                filaSeleccionada,
+                4
+        );
 
-                pedido.setEstado(
-                        EstadoPedido.EN_REPARTO
-                );
+        JOptionPane.showMessageDialog(
+                this,
+                "Repartidor asignado correctamente.\n"
+                        + "Repartidor: " + nombreRepartidor
+                        + "\nPedido en reparto."
+        );
+    }
 
-                JOptionPane.showMessageDialog(
-                        this,
-                        "Repartidor asignado correctamente.\n"
-                                + "Pedido en reparto."
-                );
+    private void actualizarEstadoEnBD(
+            int idPedido,
+            EstadoPedido nuevoEstado) {
 
-                cargarPedidos();
+        String sql = "UPDATE pedido SET estado = ? WHERE id = ?";
 
-                return;
-            }
+        try (
+                Connection conexion = ConexionBD.conectar();
+                PreparedStatement ps =
+                        conexion.prepareStatement(sql)
+        ) {
+
+            ps.setString(1, nuevoEstado.toString());
+            ps.setInt(2, idPedido);
+
+            ps.executeUpdate();
+
+            System.out.println(
+                    "Estado actualizado correctamente en la BD."
+            );
+
+        } catch (Exception e) {
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Error al actualizar el estado:\n"
+                            + e.getMessage()
+            );
         }
     }
 }

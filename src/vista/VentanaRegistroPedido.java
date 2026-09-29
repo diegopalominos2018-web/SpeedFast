@@ -1,5 +1,6 @@
 package vista;
 
+import dao.PedidoDAO;
 import modelo.Pedido;
 
 import javax.swing.*;
@@ -105,7 +106,7 @@ public class VentanaRegistroPedido extends JFrame {
 
             String tipo = cmbTipo.getSelectedItem().toString();
 
-            // Crear el pedido usando tu clase Pedido
+            // Crear el pedido
             Pedido pedido = new Pedido(
                     id,
                     direccion,
@@ -113,19 +114,32 @@ public class VentanaRegistroPedido extends JFrame {
                     distancia
             );
 
-            // Guardar el pedido en memoria
-            listaPedidos.add(pedido);
+            // Guardar en la base de datos
+            PedidoDAO pedidoDAO = new PedidoDAO();
 
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Pedido registrado correctamente."
-            );
+            if (pedidoDAO.guardar(pedido)) {
 
-            // Limpiar los campos
-            txtId.setText("");
-            txtDireccion.setText("");
-            txtDistancia.setText("");
-            cmbTipo.setSelectedIndex(0);
+                // Mantener también la lista temporal
+                listaPedidos.add(pedido);
+
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Pedido registrado correctamente."
+                );
+
+                // Limpiar campos
+                txtId.setText("");
+                txtDireccion.setText("");
+                txtDistancia.setText("");
+                cmbTipo.setSelectedIndex(0);
+
+            } else {
+
+                JOptionPane.showMessageDialog(
+                        this,
+                        "No se pudo guardar el pedido en la base de datos."
+                );
+            }
 
         } catch (NumberFormatException ex) {
 
