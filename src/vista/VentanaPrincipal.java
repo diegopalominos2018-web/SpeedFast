@@ -7,6 +7,7 @@ public class VentanaPrincipal extends JFrame {
 
     private JButton btnRegistrarPedido;
     private JButton btnListarPedidos;
+    private JButton btnGestionDatos;
 
     public VentanaPrincipal() {
 
@@ -15,27 +16,60 @@ public class VentanaPrincipal extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        JLabel titulo = new JLabel("SPEEDFAST", SwingConstants.CENTER);
-        titulo.setFont(new Font("Arial", Font.BOLD, 28));
+        JLabel titulo = new JLabel(
+                "SPEEDFAST",
+                SwingConstants.CENTER
+        );
 
-        btnRegistrarPedido = new JButton("Registrar pedido");
-        btnListarPedidos = new JButton("Listar pedidos");
+        titulo.setFont(
+                new Font(
+                        "Arial",
+                        Font.BOLD,
+                        28
+                )
+        );
+
+        btnRegistrarPedido =
+                new JButton("Registrar pedido");
+
+        btnListarPedidos =
+                new JButton("Listar pedidos");
+
+        btnGestionDatos =
+                new JButton("Gestión de datos");
 
         // Botón Registrar pedido
         btnRegistrarPedido.addActionListener(e -> {
-            VentanaRegistroPedido ventana = new VentanaRegistroPedido();
+
+            VentanaRegistroPedido ventana =
+                    new VentanaRegistroPedido();
+
             ventana.setVisible(true);
         });
 
         // Botón Listar pedidos
         btnListarPedidos.addActionListener(e -> {
-            VentanaListaPedidos ventana = new VentanaListaPedidos();
+
+            VentanaListaPedidos ventana =
+                    new VentanaListaPedidos();
+
+            ventana.setVisible(true);
+        });
+
+        // Botón Gestión de datos
+        btnGestionDatos.addActionListener(e -> {
+
+            VentanaGestion ventana =
+                    new VentanaGestion();
+
             ventana.setVisible(true);
         });
 
         JPanel panelBotones = new JPanel();
+
         panelBotones.add(btnRegistrarPedido);
         panelBotones.add(btnListarPedidos);
+        panelBotones.add(btnGestionDatos);
 
         setLayout(new BorderLayout());
 

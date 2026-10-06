@@ -1,6 +1,7 @@
 package dao;
 
 import main.ConexionBD;
+import modelo.EstadoPedido;
 import modelo.Pedido;
 
 import java.sql.Connection;
@@ -11,14 +12,17 @@ import java.util.List;
 
 public class PedidoDAO {
 
+    // CREATE
     public boolean guardar(Pedido pedido) {
 
         String sql = "INSERT INTO pedido " +
                 "(id, direccion, tipo, distancia, estado) " +
                 "VALUES (?, ?, ?, ?, ?)";
 
-        try (Connection conexion = ConexionBD.conectar();
-             PreparedStatement ps = conexion.prepareStatement(sql)) {
+        try (
+                Connection conexion = ConexionBD.conectar();
+                PreparedStatement ps = conexion.prepareStatement(sql)
+        ) {
 
             ps.setInt(1, pedido.getIdPedido());
             ps.setString(2, pedido.getDireccionEntrega());
@@ -28,15 +32,18 @@ public class PedidoDAO {
 
             ps.executeUpdate();
 
-            System.out.println("Pedido guardado correctamente en la BD.");
             return true;
 
         } catch (Exception e) {
-            System.out.println("Error al guardar pedido: " + e.getMessage());
+
+            System.out.println("Error al guardar pedido: "
+                    + e.getMessage());
+
             return false;
         }
     }
 
+    // READ
     public List<Pedido> listarTodos() {
 
         List<Pedido> pedidos = new ArrayList<>();
@@ -44,9 +51,11 @@ public class PedidoDAO {
         String sql = "SELECT id, direccion, tipo, distancia, estado " +
                 "FROM pedido ORDER BY id";
 
-        try (Connection conexion = ConexionBD.conectar();
-             PreparedStatement ps = conexion.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try (
+                Connection conexion = ConexionBD.conectar();
+                PreparedStatement ps = conexion.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()
+        ) {
 
             while (rs.next()) {
 
@@ -58,7 +67,7 @@ public class PedidoDAO {
                 );
 
                 pedido.setEstado(
-                        modelo.EstadoPedido.valueOf(
+                        EstadoPedido.valueOf(
                                 rs.getString("estado")
                         )
                 );
@@ -67,9 +76,70 @@ public class PedidoDAO {
             }
 
         } catch (Exception e) {
-            System.out.println("Error al listar pedidos: " + e.getMessage());
+
+            System.out.println("Error al listar pedidos: "
+                    + e.getMessage());
         }
 
         return pedidos;
+    }
+
+    // UPDATE
+    public boolean actualizar(Pedido pedido) {
+
+        String sql = "UPDATE pedido SET " +
+                "direccion = ?, " +
+                "tipo = ?, " +
+                "distancia = ?, " +
+                "estado = ? " +
+                "WHERE id = ?";
+
+        try (
+                Connection conexion = ConexionBD.conectar();
+                PreparedStatement ps = conexion.prepareStatement(sql)
+        ) {
+
+            ps.setString(1, pedido.getDireccionEntrega());
+            ps.setString(2, pedido.getTipoPedido());
+            ps.setDouble(3, pedido.getDistanciaKm());
+            ps.setString(4, pedido.getEstado().toString());
+            ps.setInt(5, pedido.getIdPedido());
+
+            ps.executeUpdate();
+
+            return true;
+
+        } catch (Exception e) {
+
+            System.out.println("Error al actualizar pedido: "
+                    + e.getMessage());
+
+            return false;
+        }
+    }
+
+    // DELETE
+    public boolean eliminar(int id) {
+
+        String sql = "DELETE FROM pedido WHERE id = ?";
+
+        try (
+                Connection conexion = ConexionBD.conectar();
+                PreparedStatement ps = conexion.prepareStatement(sql)
+        ) {
+
+            ps.setInt(1, id);
+
+            ps.executeUpdate();
+
+            return true;
+
+        } catch (Exception e) {
+
+            System.out.println("Error al eliminar pedido: "
+                    + e.getMessage());
+
+            return false;
+        }
     }
 }

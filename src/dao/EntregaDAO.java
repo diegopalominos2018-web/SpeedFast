@@ -1,33 +1,141 @@
 package dao;
 
 import main.ConexionBD;
+import modelo.Entrega;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
 public class EntregaDAO {
 
-    public List<String> listarTodos() {
+    // CREATE
+    public boolean crear(Entrega entrega) {
 
-        List<String> repartidores = new ArrayList<>();
+        String sql = "INSERT INTO entrega " +
+                "(id, id_pedido, id_repartidor, fecha, hora) " +
+                "VALUES (?, ?, ?, ?, ?)";
 
-        String sql = "SELECT nombre FROM repartidor";
+        try (
+                Connection conexion = ConexionBD.conectar();
+                PreparedStatement ps = conexion.prepareStatement(sql)
+        ) {
 
-        try (Connection conexion = ConexionBD.conectar();
-             PreparedStatement ps = conexion.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+            ps.setInt(1, entrega.getId());
+            ps.setInt(2, entrega.getIdPedido());
+            ps.setInt(3, entrega.getIdRepartidor());
+            ps.setDate(4, Date.valueOf(entrega.getFecha()));
+            ps.setTime(5, Time.valueOf(entrega.getHora()));
+
+            ps.executeUpdate();
+
+            return true;
+
+        } catch (Exception e) {
+
+            System.out.println("Error al crear entrega: "
+                    + e.getMessage());
+
+            return false;
+        }
+    }
+
+    // READ
+    public List<Entrega> listarTodos() {
+
+        List<Entrega> entregas = new ArrayList<>();
+
+        String sql = "SELECT id, id_pedido, id_repartidor, fecha, hora " +
+                "FROM entrega ORDER BY id";
+
+        try (
+                Connection conexion = ConexionBD.conectar();
+                PreparedStatement ps = conexion.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()
+        ) {
 
             while (rs.next()) {
-                repartidores.add(rs.getString("nombre"));
+
+                Entrega entrega = new Entrega(
+                        rs.getInt("id"),
+                        rs.getInt("id_pedido"),
+                        rs.getInt("id_repartidor"),
+                        rs.getDate("fecha").toLocalDate(),
+                        rs.getTime("hora").toLocalTime()
+                );
+
+                entregas.add(entrega);
             }
 
         } catch (Exception e) {
-            System.out.println("Error al listar repartidores: " + e.getMessage());
+
+            System.out.println("Error al listar entregas: "
+                    + e.getMessage());
         }
 
-        return repartidores;
+        return entregas;
+    }
+
+    // UPDATE
+    public boolean actualizar(Entrega entrega) {
+
+        String sql = "UPDATE entrega SET " +
+                "id_pedido = ?, " +
+                "id_repartidor = ?, " +
+                "fecha = ?, " +
+                "hora = ? " +
+                "WHERE id = ?";
+
+        try (
+                Connection conexion = ConexionBD.conectar();
+                PreparedStatement ps = conexion.prepareStatement(sql)
+        ) {
+
+            ps.setInt(1, entrega.getIdPedido());
+            ps.setInt(2, entrega.getIdRepartidor());
+            ps.setDate(3, Date.valueOf(entrega.getFecha()));
+            ps.setTime(4, Time.valueOf(entrega.getHora()));
+            ps.setInt(5, entrega.getId());
+
+            ps.executeUpdate();
+
+            return true;
+
+        } catch (Exception e) {
+
+            System.out.println("Error al actualizar entrega: "
+                    + e.getMessage());
+
+            return false;
+        }
+    }
+
+    // DELETE
+    public boolean eliminar(int id) {
+
+        String sql = "DELETE FROM entrega WHERE id = ?";
+
+        try (
+                Connection conexion = ConexionBD.conectar();
+                PreparedStatement ps = conexion.prepareStatement(sql)
+        ) {
+
+            ps.setInt(1, id);
+
+            ps.executeUpdate();
+
+            return true;
+
+        } catch (Exception e) {
+
+            System.out.println("Error al eliminar entrega: "
+                    + e.getMessage());
+
+            return false;
+        }
     }
 }
